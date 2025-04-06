@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chatbox { width: 400px; height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+        .user { color: blue; }
+        .bot { color: green; }
+        input { width: 300px; padding: 5px; }
+        button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h2>Langflow AI Chatbot</h2>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type a message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (!userInput) return;
+            
+            // Display user message
+            document.getElementById("chatbox").innerHTML += `<p class="user"><b>You:</b> ${userInput}</p>`;
+            
+            fetch("http://127.0.0.1:8000/chat", { 
+
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display bot response
+                document.getElementById("chatbox").innerHTML += `<p class="bot"><b>Bot:</b> ${data.reply}</p>`;
+            })
+            .catch(error => console.error("Error:", error));
+            
+            document.getElementById("userInput").value = ""; // Clear input
+        }
+    </script>
+</body>
+</html>
