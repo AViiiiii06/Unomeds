@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNOMEDS AI Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #e1f5fe, #fce4ec);
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #00695c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      border: 2px solid #004d40;
+      border-radius: 15px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .chat-title {
+      text-align: center;
+      color: #004d40;
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #chatbox {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .user {
+      color: blue;
+      margin: 5px 0;
+    }
+
+    .bot {
+      color: green;
+      margin: 5px 0;
+    }
+
+    input[type="text"] {
+      width: 75%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button.send-btn {
+      padding: 10px 16px;
+      margin-left: 10px;
+      background-color: #004d40;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button.send-btn:hover {
+      background-color: #00695c;
+    }
+
+    @media screen and (max-width: 600px) {
+      .chat-container {
+        width: 90%;
+        margin: 20px auto;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      button.send-btn {
+        width: 100%;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>UNOMEDS AI Chatbot</header>
+  <div class="chat-container">
+    <div class="chat-title">Langflow AI Assistant 🤖</div>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here..." />
+    <button class="send-btn" onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const userInput = document.getElementById("userInput").value;
+      if (!userInput) return;
+
+      const chatbox = document.getElementById("chatbox");
+      chatbox.innerHTML += `<p class="user"><strong>You:</strong> ${userInput}</p>`;
+
+      fetch("http://127.0.0.1:8000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+      })
+      .then(response => response.json())
+      .then(data => {
+        chatbox.innerHTML += `<p class="bot"><strong>Bot:</strong> ${data.reply}</p>`;
+        chatbox.scrollTop = chatbox.scrollHeight;
+      })
+      .catch(err => {
+        chatbox.innerHTML += `<p class="bot"><strong>Bot:</strong> Sorry, something went wrong.</p>`;
+      });
+
+      document.getElementById("userInput").value = "";
+    }
+  </script>
+</body>
+</html>
