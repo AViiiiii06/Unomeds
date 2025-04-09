@@ -5,38 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UNOMEDS AI Chatbot</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #e1f5fe, #fce4ec);
-      color: #333;
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f9f9;
+      color: #2e3d49;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      background-color: #00695c;
+      background-color: #1e88e5;
       color: white;
       padding: 20px;
       text-align: center;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .chat-container {
-      max-width: 600px;
+      max-width: 700px;
       margin: 40px auto;
       background: white;
-      border: 2px solid #004d40;
+      border: 2px solid #90caf9;
       border-radius: 15px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-      padding: 20px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px 20px;
+      flex: 1;
     }
 
     .chat-title {
       text-align: center;
-      color: #004d40;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: bold;
+      color: #1565c0;
       margin-bottom: 20px;
     }
 
@@ -44,76 +53,97 @@
       height: 300px;
       overflow-y: auto;
       border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 15px;
-      border-radius: 8px;
-      background: #fafafa;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      background: #f9f9f9;
     }
 
     .user {
-      color: blue;
-      margin: 5px 0;
+      color: #1e88e5;
+      margin: 8px 0;
     }
 
     .bot {
-      color: green;
-      margin: 5px 0;
+      color: #43a047;
+      margin: 8px 0;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     input[type="text"] {
-      width: 75%;
-      padding: 10px;
+      flex: 1;
+      padding: 12px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 1rem;
     }
 
     button.send-btn {
-      padding: 10px 16px;
-      margin-left: 10px;
-      background-color: #004d40;
+      padding: 12px 20px;
+      background-color: #1565c0;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     button.send-btn:hover {
-      background-color: #00695c;
+      background-color: #0d47a1;
+    }
+
+    footer {
+      background-color: #e3f2fd;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #333;
     }
 
     @media screen and (max-width: 600px) {
       .chat-container {
         width: 90%;
-        margin: 20px auto;
+        padding: 20px 15px;
       }
 
-      input[type="text"] {
-        width: 100%;
-        margin-bottom: 10px;
+      .input-area {
+        flex-direction: column;
       }
 
       button.send-btn {
         width: 100%;
-        margin: 0;
       }
     }
   </style>
 </head>
 <body>
   <header>UNOMEDS AI Chatbot</header>
+
   <div class="chat-container">
     <div class="chat-title">Langflow AI Assistant 🤖</div>
     <div id="chatbox"></div>
-    <input type="text" id="userInput" placeholder="Type your message here..." />
-    <button class="send-btn" onclick="sendMessage()">Send</button>
+
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Type your message here..." />
+      <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
   </div>
+
+  <footer>
+    <p><strong>Contact Us:</strong> support@unomeds.com | +91-9876543210</p>
+    <p>© 2025 UNOMEDS. Developed by Soumalya Banik & Team.</p>
+  </footer>
 
   <script>
     function sendMessage() {
       const userInput = document.getElementById("userInput").value;
-      if (!userInput) return;
+      if (!userInput.trim()) return;
 
       const chatbox = document.getElementById("chatbox");
       chatbox.innerHTML += `<p class="user"><strong>You:</strong> ${userInput}</p>`;
