@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNOMEDS Authentication</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f9f9;
+      color: #2e3d49;
+    }
+
+    .dashboard {
+      width: 100%;
+      background-color: #000;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 20px;
+      font-family: 'Roboto Flex', sans-serif;
+    }
+
+    .dashboard .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .auth-container {
+      display: flex;
+      height: calc(100vh - 48px); /* adjust for header height */
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .auth-image {
+      flex: 1;
+      background-image: url('assets/auth.jpg');
+      background-size: cover;
+      background-position: center;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+    }
+
+    .auth-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .auth-form h2 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+      color: #000;
+    }
+
+    .auth-form input {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .auth-form .continue-btn {
+      background-color: #000;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .auth-form .continue-btn:hover {
+      background-color: #333;
+    }
+
+    .divider {
+      text-align: center;
+      color: #aaa;
+      margin: 20px 0;
+    }
+
+    .auth-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-weight: 500;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .auth-option img {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+
+    .consent-text {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 20px;
+    }
+
+    .attribution {
+      font-size: 0.7rem;
+      color: #888;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- UNOMEDS Header -->
+  <div class="dashboard">
+    <div class="logo">UNOMEDS</div>
+  </div>
+
+  <!-- Auth Layout -->
+  <div class="auth-container">
+    <!-- Left: Image -->
+    <div class="auth-image"></div>
+
+    <!-- Right: Auth Form -->
+    <div class="auth-form">
+      <h2>Authenticate to UNOMEDS</h2>
+
+      <input type="text" placeholder="Enter Phone Number or Email" />
+
+      <button class="continue-btn">Continue</button>
+
+      <div class="divider">---------------------- or ----------------------</div>
+
+      <div class="auth-option">
+        <img src="assets/google.png" alt="Google" />
+        Continue with Google
+      </div>
+
+      <div class="auth-option">
+        <img src="assets/apple-logo.png" alt="Apple" />
+        Continue with Apple
+      </div>
+
+      <div class="consent-text">
+        By proceeding, you consent to get calls, WhatsApp or SMS/RCS messages, including by automated means, from UNOMEDS and its affiliates to the number provided.
+      </div>
+
+      
+    </div>
+  </div>
+
+</body>
+</html>
