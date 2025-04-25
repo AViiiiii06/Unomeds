@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UNOMEDS: A Onestop Medication Webapp</title>
+  <title>UNOMEDS Dashboard</title>
   <style>
     * {
       margin: 0;
@@ -15,156 +15,226 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f9f9;
       color: #2e3d49;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
-    header {
-      background-color: #1e88e5;
+    .dashboard {
+      width: 100%;
+      background-color: #000;
       color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #1565c0;
-      padding: 10px 20px;
-      flex-wrap: wrap;
+      padding: 4px 20px;
+      font-family: 'Roboto Flex', sans-serif;
     }
 
-    .top-bar span {
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      margin-right: 15px;
-    }
-
-    .top-bar .right-links {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background-color: white;
-      color: #1565c0;
-      border: 2px solid #1565c0;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: #1565c0;
-      color: white;
-    }
-
-    .main-content {
-      flex: 1;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
-      padding: 40px 10px;
-      flex-wrap: wrap;
-    }
-
-    .image-slider {
-      width: 40%;
-      height: 300px;
-      background-color: white;
-      border: 2px solid #90caf9;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
+    .dashboard .logo {
       font-size: 1.5rem;
-      color: #1565c0;
-      margin: 10px;
+      font-weight: bold;
+    }
+
+    .dashboard .right-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dashboard .profile-pic {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #ccc;
+      background-image: url('https://via.placeholder.com/35');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .dashboard .login-btn {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dashboard .login-btn:hover {
+      background-color: #ddd;
+    }
+
+    .content {
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .headline {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #000;
+      text-align: left;
+      padding: 20px;
+    }
+
+    .segments {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .segment {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .chatbot-link {
-      text-align: center;
-      margin: 30px 0;
-    }
-
-    .chatbot-link a {
-      text-decoration: none;
-      background-color: #1565c0;
-      color: white;
-      padding: 12px 25px;
+    .segment img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
       border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
+      background-color: #ccc;
     }
 
-    .chatbot-link a:hover {
-      background-color: #0d47a1;
-    }
-
-    footer {
-      background-color: #e3f2fd;
-      padding: 20px;
-      text-align: center;
-      font-size: 0.95rem;
+    .segment .description {
+      font-size: 1rem;
       color: #333;
     }
 
-    @media screen and (max-width: 768px) {
-      .image-slider {
-        width: 90%;
-        height: 200px;
-      }
+    .segment .get-started-btn {
+      background-color: #000;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      font-weight: bold;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 1in;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
 
-      .top-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
+    .segment .get-started-btn:hover {
+      background-color: #333;
+      transform: scale(1.02);
+    }
 
-      .top-bar .right-links {
-        justify-content: flex-start;
-      }
+    .segment .get-started-btn:active {
+      background-color: #555;
+      transform: scale(0.98);
     }
   </style>
 </head>
 <body>
-  <header>UNOMEDS: A ONESTOP MEDICATION WEBAPP</header>
 
-  <div class="top-bar">
-    <span>BRING YOUR DOCTOR HOME AT ONE CLICK</span>
-    <div class="right-links">
-      <a href="#meds" class="btn">MEDS</a>
-      <a href="#prescription" class="btn">PRESCRIPTION</a>
-      <a href="#login" class="btn">LOGIN</a>
+  <div class="dashboard">
+    <div class="logo">UNOMEDS</div>
+    <div class="right-section">
+      <div class="profile-pic"></div>
+      <button class="login-btn" onclick="location.href='auth.html'">Login</button>
     </div>
   </div>
 
-  <div class="main-content">
-    <div class="image-slider">SLIDER 1</div>
-    <div class="image-slider">SLIDER 2</div>
+  <div class="headline">
+    UNOMEDS, Your AI Doctor In One Click...
   </div>
 
-  <div class="chatbot-link">
-    <a href="chatbot.html">Open Chatbot 🤖</a>
-  </div>
+  <div class="segments">
+    <div class="segment" style="height: 384px;">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="description" style="font-size: 1.2rem; font-weight: bold; color: #000;">
+          Your digital prescription assistant, upload and manage prescriptions instantly.
+        </div>
+        <button class="get-started-btn" style="margin-top: 20px;">
+          Get Started
+        </button>
+      </div>
+      <div style="position: relative; width: 384px; height: 100%;">
+        <img src="assets/prescription.jpg" alt="Prescription" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />
+        <div style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          background: linear-gradient(to right, white 0%, transparent 30%);
+        "></div>
+      </div>
+    </div>
 
-  <footer>
-    <p><strong>Contact Us:</strong> support@unomeds.com | +91-9876543210</p>
-    <p>© 2025 UNOMEDS. Developed by Soumalya Banik & Team.</p>
-  </footer>
+    <div class="segment" style="height: 384px;">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="description" style="font-size: 1.2rem; font-weight: bold; color: #000;">
+          Suggest Medicine And Practices for your health.
+        </div>
+        <button class="get-started-btn" style="margin-top: 20px;">
+          Get Started
+        </button>
+      </div>
+      <div style="position: relative; width: 384px; height: 100%;">
+        <img src="assets/medicine.jpg" alt="Medicine" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />
+        <div style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          background: linear-gradient(to right, white 0%, transparent 30%);
+        "></div>
+      </div>
+    </div>
+
+    <div class="segment" style="height: 384px;">
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+        <div class="description" style="font-size: 1.2rem; font-weight: bold; color: #000;">
+          Read Medical Documentation instantly.
+        </div>
+        <button class="get-started-btn" style="margin-top: 20px;">
+          Get Started
+        </button>
+      </div>
+      <div style="position: relative; width: 384px; height: 100%;">
+        <img src="assets/medicaldocumentation.jpg" alt="Medical Documentation" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;" />
+        <div style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          background: linear-gradient(to right, white 0%, transparent 30%);
+        "></div>
+      </div>
+    </div>
+  </div>
+      
+  <div style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: black;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  z-index: 999;
+  ">
+  AI
+  </div>
 </body>
 </html>
