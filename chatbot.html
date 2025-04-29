@@ -167,3 +167,138 @@
   </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to UNOMEDS AI Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e1f5fe, #fce4ec);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #00695c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid #004d40;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .chat-title {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #004d40;
+      margin-bottom: 20px;
+    }
+
+    #chatbox {
+      height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fafafa;
+      margin-bottom: 15px;
+    }
+
+    .user, .bot {
+      margin: 5px 0;
+    }
+
+    .user { color: blue; }
+    .bot { color: green; }
+
+    input[type="text"] {
+      width: 75%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .send-btn {
+      padding: 10px 16px;
+      background-color: #004d40;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-left: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .send-btn:hover {
+      background-color: #00695c;
+    }
+
+    @media (max-width: 600px) {
+      input[type="text"], .send-btn {
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      .send-btn {
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>UNOMEDS AI Chatbot</header>
+  <div class="chat-container">
+    <div class="chat-title">Chat With your AI Assistant🤖</div>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message here..." />
+    <button class="send-btn" onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chatbox = document.getElementById("chatbox");
+    const inputBox = document.getElementById("userInput");
+
+    function sendMessage() {
+      const message = inputBox.value.trim();
+      if (!message) return;
+
+      appendMessage("You", message, "user");
+      inputBox.value = "";
+
+      fetch("http://127.0.0.1:5000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      })
+      .then(res => res.json())
+      .then(data => appendMessage("Bot", data.reply, "bot"))
+      .catch(() => appendMessage("Bot", "Sorry, something went wrong.", "bot"));
+    }
+
+    function appendMessage(sender, text, className) {
+      const msg = `<p class="${className}"><strong>${sender}:</strong> ${text}</p>`;
+      chatbox.innerHTML += msg;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+
+    inputBox.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") sendMessage();
+    });
+  </script>
+</body>
+</html>
