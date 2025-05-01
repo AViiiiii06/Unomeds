@@ -91,15 +91,34 @@
       border-radius: 8px;
       background: rgba(15, 15, 15, 0.897);
       margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .user, .bot {
-      margin: 5px 0;
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: inline-block;
       word-wrap: break-word;
     }
 
-    .user { color: #81d4fa; }
-    .bot { color: #a5d6a7; }
+    .user {
+      background-color: #004d40;
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot {
+      background-color: #2e7d32;
+      color: #ffffff;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
 
     .input-area {
       display: flex;
@@ -135,8 +154,6 @@
       background-color: #333;
     }
 
-    
-
     @media (max-width: 600px) {
       .input-area {
         flex-direction: column;
@@ -155,7 +172,6 @@
     <div class="logo">UNOMEDS</div>
   </div>
 
-
   <main>
     <section class="chat-section">
       <div class="chat-title">
@@ -170,8 +186,6 @@
       </div>
     </section>
   </main>
-
-  
 
   <script>
     const chatbox = document.getElementById("chatbox");
@@ -195,8 +209,10 @@
     }
 
     function appendMessage(sender, text, className) {
-      const msg = `<p class="${className}"><strong>${sender}:</strong> ${text}</p>`;
-      chatbox.innerHTML += msg;
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${className}`;
+      messageDiv.innerHTML = `<strong>${sender}:</strong><br>${text}`;
+      chatbox.appendChild(messageDiv);
       chatbox.scrollTop = chatbox.scrollHeight;
     }
 
@@ -206,6 +222,3 @@
   </script>
 </body>
 </html>
-
-
-// changed the chatbot ui
