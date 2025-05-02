@@ -91,15 +91,34 @@
       border-radius: 8px;
       background: rgba(15, 15, 15, 0.897);
       margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .user, .bot {
-      margin: 5px 0;
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: inline-block;
       word-wrap: break-word;
     }
 
-    .user { color: #81d4fa; }
-    .bot { color: #a5d6a7; }
+    .user {
+      background-color: #004d40;
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .bot {
+      background-color: #2e7d32;
+      color: #ffffff;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
 
     .input-area {
       display: flex;
@@ -135,8 +154,6 @@
       background-color: #333;
     }
 
-    
-
     @media (max-width: 600px) {
       .input-area {
         flex-direction: column;
@@ -147,6 +164,10 @@
         justify-content: center;
       }
     }
+    .analyze-btn { width: 100%; max-width: 800px; background: rgba(255, 255, 255, 0.63); color: #000; font-weight: bold; padding: 12px 20px; border: none; border-radius: 10px; font-size: 1rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.1s ease; }
+.analyze-btn:hover { background: rgba(255, 255, 255, 0.801); transform: translateY(-0.5px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+.analyze-btn:active { transform: translateY(0); box-shadow: none; }
+
   </style>
 </head>
 <body>
@@ -154,7 +175,6 @@
   <div class="dashboard">
     <div class="logo">UNOMEDS</div>
   </div>
-
 
   <main>
     <section class="chat-section">
@@ -168,10 +188,18 @@
           <i class="fas fa-paper-plane"></i> Send
         </button>
       </div>
+      <div style="width: 100%; display: flex; justify-content: center; margin-top: 15px;">
+        <a href="pdfupload.html" style="width: 100%; max-width: 800px; text-decoration: none;">
+          <button class="analyze-btn">
+            <img src="assets/redirecticon.png" alt="Analyze" style="height: 20px; margin-right: 8px;">
+            Analyse Prescription / Medical Scan
+          </button>
+        </a>
+      </div>
+      
     </section>
+    
   </main>
-
-  
 
   <script>
     const chatbox = document.getElementById("chatbox");
@@ -184,7 +212,7 @@
       appendMessage("You", message, "user");
       inputBox.value = "";
 
-      fetch("http://127.0.0.1:5000/chat", {
+      fetch("http://127.0.0.1:8000/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message })
@@ -195,8 +223,10 @@
     }
 
     function appendMessage(sender, text, className) {
-      const msg = `<p class="${className}"><strong>${sender}:</strong> ${text}</p>`;
-      chatbox.innerHTML += msg;
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${className}`;
+      messageDiv.innerHTML = `<strong>${sender}:</strong><br>${text}`;
+      chatbox.appendChild(messageDiv);
       chatbox.scrollTop = chatbox.scrollHeight;
     }
 
@@ -206,6 +236,3 @@
   </script>
 </body>
 </html>
-
-
-// changed the chatbot ui
