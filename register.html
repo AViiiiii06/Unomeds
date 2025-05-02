@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>UNOMEDS Authentication</title>
+  <title>UNOMEDS Registration</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,13 +41,11 @@
     .auth-form input, .continue-btn, .auth-option, .register-btn {
       padding: 14px; margin-bottom: 20px;
       font-size: 1rem; border-radius: 6px;
-      width: 100%;
-      box-sizing: border-box;
+      width: 100%; box-sizing: border-box;
     }
     .continue-btn, .register-btn {
       background: #000; color: #fff; border: none; cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
+      font-weight: bold; transition: background 0.3s;
     }
     .continue-btn:hover, .register-btn:hover {
       background: #444;
@@ -57,8 +55,7 @@
       display: flex; align-items: center;
       justify-content: center;
       gap: 10px; cursor: pointer;
-      padding: 12px;
-      border-radius: 6px;
+      padding: 12px; border-radius: 6px;
       transition: background 0.3s;
     }
     .auth-option:hover {
@@ -83,16 +80,17 @@
   <!-- UNOMEDS Header -->
   <div class="dashboard">UNOMEDS</div>
 
-  <!-- Auth Layout -->
+  <!-- Registration Layout -->
   <div class="auth-container">
     <div class="auth-image"></div>
 
     <div class="auth-form">
-      <h2>Authenticate to UNOMEDS</h2>
+      <h2>Create an Account</h2>
 
-      <input id="email-phone-input" type="text" placeholder="Enter Phone Number or Email" />
+      <input id="email-input" type="email" placeholder="Enter Email" />
       <input id="password-input" type="password" placeholder="Enter Password" />
-      <button class="continue-btn" id="email-login-btn">Login</button>
+      <input id="confirm-password-input" type="password" placeholder="Re-enter Password" />
+      <button class="continue-btn" id="register-btn">Register</button>
 
       <div class="divider">---------------------- or ----------------------</div>
 
@@ -107,23 +105,16 @@
       </div>
 
       <div class="new-user">
-        New to UNOMEDS?
+        Already have an account?
       </div>
-      <button class="register-btn" id="register-btn">Register</button>
+      <button class="register-btn" id="login-btn">Login</button>
     </div>
   </div>
 
   <!-- Firebase SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword,
-      GoogleAuthProvider,
-      OAuthProvider,
-      signInWithPopup
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "My_FIREBASE_API_KEY",
@@ -144,9 +135,7 @@
         const provider = new GoogleAuthProvider();
         const result = await signInWithPopup(auth, provider);
         alert("Welcome " + result.user.displayName);
-        window.location.href = "/landing.html";
       } catch (error) {
-        console.error("Google sign-in failed", error);
         alert("Google Sign-in failed.");
       }
     });
@@ -157,30 +146,40 @@
         const provider = new OAuthProvider('apple.com');
         const result = await signInWithPopup(auth, provider);
         alert("Signed in with Apple: " + result.user.email);
-        window.location.href = "/landing.html";
       } catch (error) {
-        console.error("Apple sign-in failed", error);
-        alert("Apple Sign-in failed. You may need to host over HTTPS and configure Apple Developer Console.");
+        alert("Apple Sign-in failed.");
       }
     });
 
-    // Email/Password Login
-    document.getElementById("email-login-btn").addEventListener("click", async () => {
-      const email = document.getElementById("email-phone-input").value;
+    // Registration Process
+    document.getElementById("register-btn").addEventListener("click", async () => {
+      const email = document.getElementById("email-input").value;
       const password = document.getElementById("password-input").value;
+      const confirmPassword = document.getElementById("confirm-password-input").value;
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
       try {
-        const result = await signInWithEmailAndPassword(auth, email, password);
-        alert("Logged in as: " + result.user.email);
-        window.location.href = "/landing.html";
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        alert("Account created successfully: " + userCredential.user.email);
+        window.location.href = "/auth.html"; // Redirect to login page after registration
       } catch (error) {
-        console.error("Login failed", error);
-        alert("Login failed: " + error.message);
+        alert("Registration failed: " + error.message);
       }
     });
 
-    // Register Button Handler
-    document.getElementById("register-btn").addEventListener("click", () => {
-      window.location.href = "/register.html";
+    // Login Button Handler
+    document.getElementById("login-btn").addEventListener("click", () => {
+      window.location.href = "/auth.html"; // Redirect to login page
     });
   </script>
 
